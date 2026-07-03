@@ -11,7 +11,7 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
     setText(e.target.value);
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const trimmed = text.trim();

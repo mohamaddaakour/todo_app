@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Counter from "./components/Counter";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 import type { Todo } from "./types/todos";
@@ -7,7 +6,6 @@ import type { Todo } from "./types/todos";
 type Filter = "all" | "active" | "completed";
 
 function App() {
-  // ✅ Lazy initialization (FIXES your problem)
   const [todos, setTodos] = useState<Todo[]>(() => {
     try {
       const stored = localStorage.getItem("todos");
@@ -28,7 +26,6 @@ function App() {
 
   const [filter, setFilter] = useState<Filter>("all");
 
-  // ✅ Save todos whenever they change
   useEffect(() => {
     try {
       localStorage.setItem("todos", JSON.stringify(todos));
@@ -61,7 +58,6 @@ function App() {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
   }
 
-  // ✅ Derived state (correct approach)
   const filteredTodos = todos.filter((todo) => {
     if (filter === "active") return !todo.completed;
     if (filter === "completed") return todo.completed;
@@ -72,9 +68,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center gap-10">
-      <h1 className="text-3xl font-bold">Counter & Todo App</h1>
-
-      <Counter />
+      <h1 className="text-3xl font-bold">Todo App</h1>
 
       <div className="w-full flex flex-col items-center gap-4">
         <TodoInput onAdd={handleAddTodo} />
@@ -96,14 +90,12 @@ function App() {
           ))}
         </div>
 
-        {/* Todo List */}
         <TodoList
           todos={filteredTodos}
           onToggle={handleToggleTodo}
           onDelete={handleDeleteTodo}
         />
 
-        {/* Stats */}
         <p className="text-sm text-gray-500">
           {completedCount} / {todos.length} completed
         </p>
