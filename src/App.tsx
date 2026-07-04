@@ -9,6 +9,7 @@ function App() {
   const [todos, setTodos] = useState<Todo[]>(() => {
     try {
       const stored = localStorage.getItem("todos");
+      
       if (!stored) return [];
 
       const parsed: unknown = JSON.parse(stored);
